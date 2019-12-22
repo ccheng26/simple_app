@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 import useForm from '../customHooks/useForm';
+import AlertBox from '../components/AlertBox'
 import { validateLogin } from '../formValidationUtils'
+import { handleAPIRequest } from '../utils'
 
 const style = {
   buttonContainer: {
@@ -12,18 +14,22 @@ const style = {
   }
 }
 
-const LoginForm = () => {
+const LoginForm = ({ loginResponse }) => {
   const { values, handleChange, handleSubmit, handleValidation, errors } = useForm(login, validateLogin, ['username', 'password']);
-  function login() {
-    console.log(values)
-  }
   const formName = 'Login'
+  let [apiResponse, setApiReponse] = useState('')
   async function login() {
-    await handleAPIRequest("POST", '/login', values)
+    let response = await handleAPIRequest("POST", 'http://127.0.0.1:8000/login', values)
+    if (response.data) {
+      loginResponse(response.data)
+    } else if (response.apiError) {
+      setApiReponse(response.apiError)
+    }
   }
   return (
     <form id={formName}>
       {/* not using a map here, overkill for two fields that will most likely not change*/}
+      {apiResponse && <AlertBox boxMessage={apiResponse} alertColor='red' />}
       <InputField
         inputWidth='100%'
         inputLabelId='username'

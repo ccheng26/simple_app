@@ -1,3 +1,6 @@
-frontend/node_modules
-frontend/.next
-frontend/package-lock.json
+.vscode
+node_modules
+src/.next
+package-lock.json
+__pycache__/
+.env

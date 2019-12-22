@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 import useForm from '../customHooks/useForm';
 import { validateSignIn } from '../formValidationUtils'
 import { handleAPIRequest } from '../utils'
+import AlertBox from '../components/AlertBox';
 
 const style = {
   buttonContainer: {
@@ -38,12 +39,27 @@ const SignUpForm = () => {
     }
   }
   const { values, handleChange, handleSubmit, handleValidation, errors } = useForm(signup, validateSignIn, Object.keys(formInputFields));
+  let [apiResponse, setApiReponse] = useState('')
+  let [apiErr, setApiErr] = useState(false)
+
   async function signup() {
-    await handleAPIRequest("POST", '/signup', values)
+    let response = await handleAPIRequest("POST", 'http://127.0.0.1:8000/signup', values)
+    if (response.success) {
+      setApiReponse(response.success)
+      setApiErr(false)
+      setTimeout(() => {
+        setApiReponse('');
+        window.location = '/'
+      }, 5000);
+    } else if (response.apiError) {
+      setApiReponse(response.apiError)
+      setApiErr(true)
+    }
   }
   const formName = 'signup'
   return (
     <form id={formName}>
+      {apiResponse && <AlertBox boxMessage={apiResponse} alertColor={apiErr ? 'red' : 'green'} />}
       {Object.keys(formInputFields).map(fieldName =>
         <InputField
           key={fieldName}

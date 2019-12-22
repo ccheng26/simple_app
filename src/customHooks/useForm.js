@@ -7,14 +7,17 @@ const useForm = (callback, validationRules, requiredFields) => {
 
   useEffect(() => {
     // submit form if no errors
-    if (Object.keys(errors).length === 0 && submitAction) {
+    if (Object.keys(values).length === requiredFields.length
+      && Object.values(errors).filter(error => error).length === 0
+      && submitAction) {
       callback();
     }
   }, [errors]);
 
   const handleSubmit = event => {
     if (event) { event.preventDefault(); }
-    setErrors(validationRules(values, 'all', errors, requiredFields));
+    let loggedErrors = validationRules(values, 'all', errors, requiredFields)
+    setErrors(loggedErrors)
     setSubmitAction(true);
   }
 

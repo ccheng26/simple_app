@@ -1,4 +1,4 @@
-const Header = ({pageHeader}) => (
+const Header = ({ pageHeader }) => (
   <h1 className='header'>
     {pageHeader}
   </h1>

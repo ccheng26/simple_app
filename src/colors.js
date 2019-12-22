@@ -2,6 +2,20 @@ const COLORS = {
   text: {
     error: 'red'
   },
+  textBox: {
+    background: {
+      red: '#f8d7da',
+      green: '#d4edda'
+    },
+    border: {
+      red: '#f5c6cb',
+      green: '#c3e6cb'
+    },
+    text: {
+      red: '#721c24',
+      green: '#155724'
+    }
+  },
   button: {
     background: {
       blue: '#dae8fc',

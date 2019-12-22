@@ -1,13 +1,13 @@
 import Container from '../components/container'
-import Signup from '../containers/SignUpContainer.js'
+import SignupForm from '../containers/SignUpContainer.js'
 
-const SignUp = () => (
+const Signup = () => (
   <div style={{ padding: '5% 20%' }}>
     <Container
-      contents={<Signup />}
+      contents={<SignupForm />}
       pageHeader={`Create a New Account`}
     />
   </div>
 )
 
-export default SignUp;
+export default Signup;

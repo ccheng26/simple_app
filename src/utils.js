@@ -1,7 +1,7 @@
 export const handleAPIRequest = async (method, route, data, additionalHeaders) => {
   try {
-    console.log(method, route, data)
-    let response = await fetch(`/${route}`, {
+    route = /^((http|https):\/\/)/.test(route) ? route : `/{route}`
+    let response = await fetch(`${route}`, {
       method: `${method}`,
       body: JSON.stringify(data),
       headers: {
@@ -14,8 +14,9 @@ export const handleAPIRequest = async (method, route, data, additionalHeaders) =
     return responseData
   } catch (err) {
     console.warn(err)
-    return 'API ERROR'
+    return { apiError: 'Connection failed, please try again later' }
   }
 }
 
-export const camelToTitle = str => str.replace(/([A-Z])/g, ' $1').replace(/^./, firstLetter => firstLetter.toUpperCase())
+export const camelToTitle = str => str.replace(/([A-Z])/g, ' $1')
+  .replace(/^./, firstLetter => firstLetter.toUpperCase())
