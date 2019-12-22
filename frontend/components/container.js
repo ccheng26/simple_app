@@ -1,4 +1,4 @@
-import Header from './header.js';
+import Header from './Header.js';
 
 const styles = {
   container: {
@@ -10,7 +10,7 @@ const styles = {
   }
 }
 
-const Container = ({pageHeader, contents}) => (
+const Container = ({ pageHeader, contents }) => (
   <div className='container' style={styles.container}>
     <Header pageHeader={pageHeader} />
     {contents}
