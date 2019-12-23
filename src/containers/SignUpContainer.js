@@ -43,7 +43,7 @@ const SignUpForm = () => {
   let [apiErr, setApiErr] = useState(false)
 
   async function signup() {
-    let response = await handleAPIRequest("POST", 'http://127.0.0.1:8000/signup', values)
+    let response = await handleAPIRequest("POST", 'signup', values)
     if (response.success) {
       setApiReponse(response.success)
       setApiErr(false)

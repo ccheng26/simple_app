@@ -19,7 +19,7 @@ const LoginForm = ({ loginResponse }) => {
   const formName = 'Login'
   let [apiResponse, setApiReponse] = useState('')
   async function login() {
-    let response = await handleAPIRequest("POST", 'http://127.0.0.1:8000/login', values)
+    let response = await handleAPIRequest("POST", 'login', values)
     if (response.data) {
       loginResponse(response.data)
     } else if (response.apiError) {

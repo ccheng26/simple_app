@@ -1,6 +1,9 @@
 export const handleAPIRequest = async (method, route, data, additionalHeaders) => {
   try {
-    route = /^((http|https):\/\/)/.test(route) ? route : `/{route}`
+    let host = process.env.API
+    route = `${host}/${route}`
+    // use relative route if not calling ext path
+    route = /^((http|https):\/\/)/.test(route) ? route : `/${route}`
     let response = await fetch(`${route}`, {
       method: `${method}`,
       body: JSON.stringify(data),
