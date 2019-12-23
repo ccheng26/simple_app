@@ -24,7 +24,7 @@ def index():
 
 
 @cross_origin()
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         session = db.session
@@ -49,13 +49,13 @@ def login():
 
 
 @cross_origin()
-@app.route("/signup", methods=["POST"])
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
-    response = {}
     if request.method == "POST":
+        response = {}
         responseBody = dict(request.get_json())
-        firstName, lastName, email,
-        username, password, confirmPassword = responseBody.values()
+        (firstName, lastName, email,
+         username, password, confirmPassword) = responseBody.values()
         for key in responseBody.keys():
             if not bool(responseBody[key]):
                 response['apiError'] = f'Missing {key}'
