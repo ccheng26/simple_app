@@ -1,8 +1,4 @@
-import sys
-
-sys.path.append(".")
-
-from . import db
+from backend import db
 
 
 class User(db.Model):

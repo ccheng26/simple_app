@@ -13,8 +13,8 @@ from flask_cors import cross_origin
 from sqlalchemy.sql import exists
 from flask_sqlalchemy import SQLAlchemy
 
-from .models import User
 from backend import db
+from .models import User
 
 
 @app.route("/")

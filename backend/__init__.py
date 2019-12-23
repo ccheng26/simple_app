@@ -1,4 +1,5 @@
 import os
+import sys
 
 from dotenv import load_dotenv
 
@@ -24,26 +25,24 @@ PG = {
 
 db = SQLAlchemy()
 
+sys.path.insert(0, os.path.abspath(
+                os.path.join(
+                    os.path.dirname(__file__), '..')))
+
 
 def init():
     app = Flask(__name__, instance_relative_config=False)
     CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
-    dbString = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % PG
-    app.config['SQLALCHEMY_DATABASE_URI'] = dbString
+    db_str = os.getenv('DATABASE_URL')
+    db_str = (db_str if db_str is not None
+              else 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % PG)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_str
     db.init_app(app)
     with app.app_context():
         from users import routes
         db.create_all()
         return app
-
-
-def get_env_variable(name):
-    try:
-        return os.environ[name]
-    except KeyError:
-        message = "Expected environment variable '{}' not set.".format(name)
-        raise Exception(message)
 
 
 if __name__ == "__main__":
