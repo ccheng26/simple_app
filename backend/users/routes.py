@@ -17,17 +17,18 @@ from backend import db
 from .models import User
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
-    return "API ROUTES"
+    if request.method == "GET":
+        return "API ROUTES"
 
 
 @cross_origin()
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
-    session = db.session
-    response = {}
     if request.method == "POST":
+        session = db.session
+        response = {}
         responseBody = dict(request.get_json())
         username, password = responseBody.values()
         if check_if_exists('username', username):
@@ -48,7 +49,7 @@ def login():
 
 
 @cross_origin()
-@app.route("/signup", methods=["GET", "POST"])
+@app.route("/signup", methods=["POST"])
 def signup():
     response = {}
     if request.method == "POST":
