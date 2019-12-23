@@ -12,7 +12,6 @@ from flask_cors import cross_origin
 
 from flask_sqlalchemy import SQLAlchemy
 
-
 load_dotenv()
 
 PG = {
